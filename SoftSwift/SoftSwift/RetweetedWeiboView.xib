@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment version="2048" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RetweetedWeiboView" customModule="SoftSwift" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="210" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5e-G1-X5H">
+                    <rect key="frame" x="8" y="8" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="wJB-Mf-DhQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5z-cc-etw">
+                    <rect key="frame" x="8" y="37" width="38" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DDf-Ol-Td9">
+                    <rect key="frame" x="8" y="63" width="210" height="0.0"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="210" id="GE6-Zr-pHk"/>
+                        <constraint firstAttribute="height" id="UYk-Yu-hcO"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jlP-V8-02E">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBy-jf-uqL">
+                    <rect key="frame" x="8" y="66" width="38" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="b2I-YA-dZS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="P5e-G1-X5H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="1Be-Bk-mki"/>
+                <constraint firstItem="a5z-cc-etw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="74Z-Im-auQ"/>
+                <constraint firstItem="P5e-G1-X5H" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="IiK-eb-mTT"/>
+                <constraint firstItem="DDf-Ol-Td9" firstAttribute="top" secondItem="a5z-cc-etw" secondAttribute="bottom" constant="8" id="Jlf-7S-OrB"/>
+                <constraint firstItem="a5z-cc-etw" firstAttribute="top" secondItem="P5e-G1-X5H" secondAttribute="bottom" constant="8" id="ZLE-ty-JtR"/>
+                <constraint firstItem="qBy-jf-uqL" firstAttribute="top" secondItem="DDf-Ol-Td9" secondAttribute="bottom" constant="3" id="asE-Lk-zbk"/>
+                <constraint firstItem="DDf-Ol-Td9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="pNX-Vn-hrA"/>
+                <constraint firstItem="qBy-jf-uqL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="tw7-JR-ucI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="createTimeLabel" destination="qBy-jf-uqL" id="Wnd-MA-ZO3"/>
+                <outlet property="imageCollectionView" destination="DDf-Ol-Td9" id="GAq-Qw-0Lz"/>
+                <outlet property="imageViewHeight" destination="UYk-Yu-hcO" id="bAv-hv-sqw"/>
+                <outlet property="nameLabel" destination="P5e-G1-X5H" id="7F8-fB-qcM"/>
+                <outlet property="textLabel" destination="a5z-cc-etw" id="Skx-y5-5R2"/>
+            </connections>
+            <point key="canvasLocation" x="446" y="562"/>
+        </view>
+    </objects>
+</document>
