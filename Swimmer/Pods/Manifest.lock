@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (3.4.1)
+  - IQKeyboardManager (4.0.4)
+  - MBProgressHUD (1.0.0)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
+  - SnapKit (0.22.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - IQKeyboardManager
+  - MBProgressHUD
+  - SDWebImage
+  - SnapKit
+
+SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
+
+COCOAPODS: 0.39.0
