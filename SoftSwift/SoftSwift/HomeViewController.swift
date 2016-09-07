@@ -65,7 +65,7 @@ class HomeViewController: BaseViewController, ListViewDelegate{
         didSet{
             //显示微博加载数量的动画
             hintLabel.hidden = false
-            UIView.animateWithDuration(1.5, animations: {
+            UIView.animateWithDuration(1.0, animations: {
                 self.hintLabel.transform = CGAffineTransformMakeTranslation(0, 64)
                 self.hintLabel.text = "\(self.newStatusesCount) Weibo Loaded."
                 }) { (_) in
@@ -129,7 +129,19 @@ class HomeViewController: BaseViewController, ListViewDelegate{
     //MARK: - 设置昵称按钮和导航条
     lazy var nameBtn:nameButton = {
         let nameBtn = nameButton()
-        nameBtn.setTitle("UserName", forState: UIControlState.Normal)
+        //请求获得账户昵称
+        let access_token = UserAccount.readAccount()!.access_token
+        let uid = UserAccount.readAccount()!.uid
+        let params = ["access_token" : access_token, "uid" : uid]
+        NetworkTool.sharedNetworkTool().GET("2/users/show.json", parameters: params, progress: nil, success: { (_, JSON) in
+
+            let dic = JSON as! [String : AnyObject]
+            nameBtn.setTitle(dic["screen_name"] as? String, forState: UIControlState.Normal)
+            
+            }
+            , failure: { (_, err) in
+                print(err)
+        })
         nameBtn.addTarget(self, action: #selector(HomeViewController.nameBtnClick), forControlEvents: UIControlEvents.TouchUpInside)
         return nameBtn
     }()

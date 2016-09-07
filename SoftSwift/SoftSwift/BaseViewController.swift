@@ -13,6 +13,9 @@ class BaseViewController: UITableViewController, UnloginViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         unloginView.delegate = self
+        if isLogin{
+            tableView.separatorStyle = .None
+        }
     }
     
     //MARK: - 根据登录状态初始化view

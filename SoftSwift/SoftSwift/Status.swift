@@ -28,7 +28,22 @@ class Status: NSObject {
     }
     var id : Int = 0
     var text : String?
-    var source : String?
+    
+    var final_source : String?
+    // MARK: 去除<>标签
+    var source : String?{
+        didSet{
+            var str = source
+            let scanner = NSScanner(string: source!)
+            var text : NSString?
+            while !scanner.atEnd {
+                scanner.scanUpToString("<", intoString: nil)
+                scanner.scanUpToString(">", intoString: &text)
+                str = str!.stringByReplacingOccurrencesOfString("\(text!)>", withString: "")
+            }
+            final_source = str
+        }
+    }
     ///配图地址
     var pic_urls : [[String : AnyObject]]?
     
@@ -40,6 +55,11 @@ class Status: NSObject {
         }
     }
     var retweeted_weibo : Status?
+    
+    //转发评论点赞数
+    var reposts_count: Int = 0
+    var comments_count: Int = 0
+    var attitudes_count: Int = 0
     
     init(dic: [String:AnyObject]) {
         super.init()
@@ -78,7 +98,6 @@ class Status: NSObject {
         
         
         NetworkTool.sharedNetworkTool().GET("2/statuses/home_timeline.json", parameters: param, progress: nil, success: { (_, JSON) -> Void in
-            
             
             //1.将JSON中的statuses数组取出来
             let statuses = JSON!["statuses"] as? [[String:AnyObject]]

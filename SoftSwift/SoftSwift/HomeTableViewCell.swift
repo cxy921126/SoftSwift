@@ -18,10 +18,14 @@ class HomeTableViewCell: UITableViewCell{
     @IBOutlet weak var weibo_text: UILabel!
     @IBOutlet weak var verified_image: UIImageView!
     @IBOutlet weak var creat_at: UILabel!
+    @IBOutlet weak var source: UILabel!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     @IBOutlet weak var retweetedWeiboView: UIView!
     @IBOutlet weak var retweetedViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var repostBtn: UIButton!
+    @IBOutlet weak var commentBtn: UIButton!
+    @IBOutlet weak var likeBtn: UIButton!
     ///图片预览布局
     lazy var collectionViewLayout:ImageCollectionLayout = ImageCollectionLayout()
     lazy var retweetedPicsLayout:RetweetedPicsLayout = RetweetedPicsLayout()
@@ -34,8 +38,18 @@ class HomeTableViewCell: UITableViewCell{
             screen_name.text = status!.user?.name
             //时间
             creat_at.text = status!.created_at
+            //来源
+            source.text = "From: " + (status?.final_source)!
             //微博正文
             weibo_text.text = status!.text
+            //按钮计数
+            status!.reposts_count != 0 ? self.repostBtn.setTitle("\(self.status!.reposts_count)", forState: UIControlState.Normal) : self.repostBtn.setTitle("Like", forState: UIControlState.Normal)
+            status!.comments_count != 0 ? self.commentBtn.setTitle("\(self.status!.comments_count)", forState: UIControlState.Normal) : self.commentBtn.setTitle("Comment", forState: UIControlState.Normal)
+            status!.attitudes_count != 0 ? self.likeBtn.setTitle("\(self.status!.attitudes_count)", forState: UIControlState.Normal) : self.likeBtn.setTitle("Like", forState: UIControlState.Normal)
+
+//            repostBtn.titleLabel?.text = "\(status!.reposts_count)"
+//            commentBtn.titleLabel?.text = "\(status!.comments_count)"
+//            likeBtn.titleLabel?.text = "\(status!.attitudes_count)"
             //计算配图view的高度
             ensureImageCollectionViewHeight()
             

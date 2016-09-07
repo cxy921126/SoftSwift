@@ -18,8 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    func isLoginOrNot(){
+        if UserAccount.readAccount() != nil {
+            isLogin = true
+        }else{
+            isLogin = false
+        }
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        isLoginOrNot()
         //注册通知的监听事件
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.switchController(_:)), name: userHasLoginNote, object: nil)
         
@@ -42,8 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //新建一个uiwindow以代替未登录window
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         if notify.object!.isEqual("toWeibo"){
-            UIView.animateWithDuration(0.5, delay: 0, options: .AllowAnimatedContent, animations: {
-                self.window?.rootViewController = MainTabBarController()
+            self.window?.rootViewController = MainTabBarController()
+            self.window?.rootViewController?.view.alpha = 0.0
+            UIView.animateWithDuration(1.0, animations: {
+                self.window?.rootViewController?.view.alpha = 1.0
                 }, completion: nil)
         }
         if notify.object!.isEqual("toNewfeature"){
