@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThirdViewController: UITabBarController {
+class ThirdViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,15 +16,15 @@ class ThirdViewController: UITabBarController {
         view.backgroundColor = UIColor.yellowColor()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNot(_:)), name: postPageDidChange, object: nil)
         
-        let vc0 = UIViewController()
-        vc0.title = "VC0"
-        let vc1 = UIViewController()
-        vc1.title = "VC1"
-        
-        addChildViewController(vc0)
-        addChildViewController(vc1)
-        
-        hideTabBar()
+//        let vc0 = UIViewController()
+//        vc0.title = "VC0"
+//        let vc1 = UIViewController()
+//        vc1.title = "VC1"
+//        
+//        addChildViewController(vc0)
+//        addChildViewController(vc1)
+//        
+//        hideTabBar()
     }
     ///是否第一次进入此自控制器
     var firstIn = true
@@ -32,10 +32,10 @@ class ThirdViewController: UITabBarController {
     func receiveNot(notfy: NSNotification) {
         if notfy.object?.intValue == 2{
             //TODO: 加载主要内容
-            showTabBar()
+//            showTabBar()
             firstIn = false
         }else{
-            hideTabBar()
+//            hideTabBar()
         }
     }
     
@@ -43,13 +43,13 @@ class ThirdViewController: UITabBarController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func showTabBar() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.tabBar.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - 49)
-            }, completion: nil)
-    }
-    
-    func hideTabBar() {
-        tabBar.frame.origin = CGPoint(x: 0, y: screenHeight)
-    }
+//    func showTabBar() {
+//        UIView.animateWithDuration(0.3, animations: {
+//            self.tabBar.frame.origin = CGPoint(x: 0, y: self.view.bounds.height - 49)
+//            }, completion: nil)
+//    }
+//    
+//    func hideTabBar() {
+//        tabBar.frame.origin = CGPoint(x: 0, y: screenHeight)
+//    }
 }

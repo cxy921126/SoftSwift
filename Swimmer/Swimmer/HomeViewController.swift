@@ -14,51 +14,86 @@ let screenWidth = UIScreen.mainScreen().bounds.width
 let screenHeight = UIScreen.mainScreen().bounds.height
 let postPageDidChange = "pageDidChange"
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, CityViewControllerDelegate, LocationToolDelegate {
     
     @IBOutlet weak var tabView: UIScrollView!
     @IBOutlet weak var childControllersScrollView: UIScrollView!
+    
+    lazy var locationTool = LocationTool(withMode: .Fixed)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        locationMgr.delegate = self
         setUpNaviBar()
         setUpTabView()
-        //navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGrayColor()]
-        addButton("求学")
-        addButton("游伴")
-        addButton("我的")
         
         addScrollIndicator()
         setChildScrollView()
         setChildViewControllers()
+        
+        locationTool.delegate = self
     }
     
     //MARK: - 导航栏设置
     ///设置导航栏
     func setUpNaviBar(){
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "地点", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(chooseLocation))
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        if let storedCity = NSUserDefaults.standardUserDefaults().objectForKey("city"){
+            //如果已经保存了城市则设为按钮标题
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: (storedCity as! String), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(showCityVC))
+        }else{
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "地点", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(showCityVC))
+
+        }
         navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.lightGrayColor()], forState: UIControlState.Normal)
+        
+        //下一层VC的返回按钮
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: nil, action: nil)
     }
     
-    lazy var locationMgr: CLLocationManager = {
-        let manager = CLLocationManager()
-        if Float(UIDevice.currentDevice().systemVersion) >= 8.0 {
-            manager.requestWhenInUseAuthorization()
-            manager.distanceFilter = 1000
-            manager.startUpdatingLocation()
-        }else{
-            print("Location Service Unabled")
+    //MARK: - 地点设置
+    var currentCity: String?{
+        didSet{
+            if self.currentCity != nil{
+                self.navigationItem.leftBarButtonItem?.title = self.currentCity
+                let userDefault = NSUserDefaults.standardUserDefaults()
+                userDefault.setObject(self.currentCity, forKey: "city")
+            }else{
+                self.navigationItem.leftBarButtonItem?.title = "地点"
+            }
         }
-        return manager
+    }
+    
+    lazy var cityVC: CityViewController = {
+        let cityVC = self.storyboard?.instantiateViewControllerWithIdentifier("city") as! CityViewController
+        cityVC.delegate = self
+        return cityVC
     }()
     
-    func chooseLocation(){
+    func showCityVC() {
+        navigationController?.pushViewController(cityVC, animated: true)
+    }
+    //CityViewControllerDelegate实现
+    func cityViewController(cityVC: CityViewController, didSelectCity city: String) {
+        print(city)
+        currentCity = city
+    }
+    //LocationToolDelegate实现
+    func locationTool(locationTool: LocationTool, detectedNewLocation city: String) {
+        let confirmAlert = UIAlertController(title: "检测到新地点", message: "是否切换到:\(city)", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "是的", style: .Default) { (_) in
+            self.currentCity = city
+        }
+        
+        confirmAlert.addAction(confirmAction)
+        confirmAlert.addAction(cancelAction)
+        presentViewController(confirmAlert, animated: true, completion: nil)
     }
     
-    //MARK: - 设置scrollview
+    //MARK: - 设置scrollview和子控制器
     ///设置子控制器scrollview
     func setChildScrollView(){
         childControllersScrollView.contentSize = CGSize(width: screenWidth * 3, height: screenHeight - 64 - tabView.bounds.height)
@@ -66,25 +101,26 @@ class HomeViewController: UIViewController {
         childControllersScrollView.showsHorizontalScrollIndicator = false
         childControllersScrollView.bounces = false
         childControllersScrollView.delegate = self
+        childControllersScrollView.scrollsToTop = false
     }
     
     ///设置子控制器
     func setChildViewControllers(){
-        addSubController(FirstViewController.classForCoder())
-        addSubController(SecondViewController.classForCoder())
-        addSubController(ThirdViewController.classForCoder())
+        addSubController("first")
+        addSubController("second")
+        addSubController("third")
     }
     
-    func addSubController(viewControllerClass: AnyClass){
-        let vcType = viewControllerClass as! UIViewController.Type
-        let vc = vcType.init()
-        addChildViewController(vc)
-        childControllersScrollView.addSubview(vc.view)
-        vc.view.snp_makeConstraints { (make) in
+    func addSubController(storyboardIdentifier: String){
+        let vc = storyboard?.instantiateViewControllerWithIdentifier(storyboardIdentifier)
+        
+        addChildViewController(vc!)
+        childControllersScrollView.addSubview(vc!.view)
+        vc!.view.snp_makeConstraints { (make) in
             if self.childViewControllers.first == vc {
                 make.leading.equalTo(childControllersScrollView.snp_leading)
             }else{
-                let index = childControllersScrollView.subviews.indexOf(vc.view)
+                let index = childControllersScrollView.subviews.indexOf(vc!.view)
                 make.leading.equalTo(childControllersScrollView.subviews[index! - 1].snp_trailing)
             }
             make.top.equalTo(childControllersScrollView.snp_top)
@@ -100,7 +136,12 @@ class HomeViewController: UIViewController {
         tabView.showsVerticalScrollIndicator = false
         tabView.showsHorizontalScrollIndicator = false
         tabView.bounces = false
+        tabView.scrollsToTop = false
         automaticallyAdjustsScrollViewInsets = false
+        
+        addButton("求学")
+        addButton("游伴")
+        addButton("我的")
     }
     
     var buttonCount = 0
@@ -190,7 +231,7 @@ class HomeViewController: UIViewController {
         pageNo = Int(contentOffset / screenWidth)
     }
 }
-
+//MARK: - UIScrollViewDelegate
 extension HomeViewController: UIScrollViewDelegate{
     //滚动条随着scrollview按比例移动
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -204,12 +245,6 @@ extension HomeViewController: UIScrollViewDelegate{
             calculatePageNo(scrollView.contentOffset.x)
         }
     }
-    
 }
 
-extension HomeViewController: CLLocationManagerDelegate{
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
-    }
-}
 
