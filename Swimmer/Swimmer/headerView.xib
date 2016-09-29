@@ -9,33 +9,33 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="434" height="60"/>
+            <rect key="frame" x="0.0" y="0.0" width="434" height="59"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cg-9K-6R1">
-                    <rect key="frame" x="1" y="1" width="215" height="58"/>
+                    <rect key="frame" x="0.0" y="3" width="215" height="56"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="我要教学"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgw-wU-s4Y">
-                    <rect key="frame" x="218" y="1" width="215" height="58"/>
+                    <rect key="frame" x="218" y="3" width="216" height="56"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="条件筛选"/>
+                    <state key="normal" title="筛选"/>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="sgw-wU-s4Y" firstAttribute="leading" secondItem="1Cg-9K-6R1" secondAttribute="trailing" constant="2" id="B4U-sF-mLk"/>
-                <constraint firstItem="1Cg-9K-6R1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KwP-6X-Kbw"/>
+                <constraint firstItem="1Cg-9K-6R1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="6jp-Vz-9ra"/>
+                <constraint firstItem="sgw-wU-s4Y" firstAttribute="leading" secondItem="1Cg-9K-6R1" secondAttribute="trailing" constant="3" id="B4U-sF-mLk"/>
+                <constraint firstAttribute="bottom" secondItem="1Cg-9K-6R1" secondAttribute="bottom" id="EoU-4x-6cH"/>
                 <constraint firstItem="1Cg-9K-6R1" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" constant="-2" id="Ozv-sj-Frb"/>
                 <constraint firstItem="sgw-wU-s4Y" firstAttribute="height" secondItem="1Cg-9K-6R1" secondAttribute="height" id="Qtb-lF-Esh"/>
-                <constraint firstItem="1Cg-9K-6R1" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" constant="-2" id="XoX-q3-mFW"/>
-                <constraint firstItem="1Cg-9K-6R1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="1" id="cb2-VV-CTf"/>
-                <constraint firstAttribute="trailing" secondItem="sgw-wU-s4Y" secondAttribute="trailing" constant="1" id="lWb-cZ-zYd"/>
+                <constraint firstItem="1Cg-9K-6R1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cb2-VV-CTf"/>
+                <constraint firstAttribute="trailing" secondItem="sgw-wU-s4Y" secondAttribute="trailing" id="lWb-cZ-zYd"/>
                 <constraint firstItem="sgw-wU-s4Y" firstAttribute="centerY" secondItem="1Cg-9K-6R1" secondAttribute="centerY" id="ljr-bw-9G1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="565" y="379"/>
+            <point key="canvasLocation" x="717" y="509.5"/>
         </view>
     </objects>
 </document>

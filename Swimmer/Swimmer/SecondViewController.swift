@@ -13,22 +13,22 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor.blueColor()
+        view.backgroundColor = UIColor.blue
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNot(_:)), name: postPageDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveNot(_:)), name: NSNotification.Name(rawValue: postPageDidChange), object: nil)
     }
     ///是否第一次进入此子控制器
     var firstIn = true
     
-    func receiveNot(notfy: NSNotification) {
-        if notfy.object?.intValue == 1{
+    func receiveNot(_ notfy: Notification) {
+        if notfy.object as! Int == 1{
             //TODO: 加载主要内容
             firstIn = false
         }
     }
     
     deinit{
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

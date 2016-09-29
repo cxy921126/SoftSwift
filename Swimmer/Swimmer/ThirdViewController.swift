@@ -13,8 +13,8 @@ class ThirdViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor.yellowColor()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNot(_:)), name: postPageDidChange, object: nil)
+        view.backgroundColor = UIColor.yellow
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveNot(_:)), name: NSNotification.Name(rawValue: postPageDidChange), object: nil)
         
 //        let vc0 = UIViewController()
 //        vc0.title = "VC0"
@@ -29,8 +29,8 @@ class ThirdViewController: UIViewController {
     ///是否第一次进入此自控制器
     var firstIn = true
 
-    func receiveNot(notfy: NSNotification) {
-        if notfy.object?.intValue == 2{
+    func receiveNot(_ notfy: Notification) {
+        if notfy.object as! Int == 2{
             //TODO: 加载主要内容
 //            showTabBar()
             firstIn = false
@@ -40,7 +40,7 @@ class ThirdViewController: UIViewController {
     }
     
     deinit{
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
 //    func showTabBar() {

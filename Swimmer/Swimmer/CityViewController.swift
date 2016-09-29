@@ -8,18 +8,18 @@
 
 import UIKit
 @objc protocol CityViewControllerDelegate: NSObjectProtocol {
-    optional func cityViewController(cityVC: CityViewController, didSelectCity city: String)
+    @objc optional func cityViewController(_ cityVC: CityViewController, didSelectCity city: String)
 }
 
 class CityViewController: UITableViewController, LocationToolDelegate {
     weak var delegate: CityViewControllerDelegate?
     var cities = ["北京市", "上海市", "广州市", "深圳市", "厦门市", "杭州市", "福州市"]
     let cityCellIdentifier = "cityCell"
-    var locationTool = LocationTool(withMode: .DetectOnly)
+    var locationTool = LocationTool(withMode: .detectOnly)
     var currentCity: String?{
         didSet{
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
@@ -27,23 +27,23 @@ class CityViewController: UITableViewController, LocationToolDelegate {
         super.viewDidLoad()
 
         locationTool.delegate = self
-        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: cityCellIdentifier)
+        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: cityCellIdentifier)
         title = "选择城市"
     }
     
     //MARK: - LocationToolDelegate
-    func locationTool(locationTool: LocationTool, onlyGetCity city: String) {
+    func locationTool(_ locationTool: LocationTool, onlyGetCity city: String) {
         currentCity = city
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if section == 1 {
             return cities.count
@@ -52,28 +52,28 @@ class CityViewController: UITableViewController, LocationToolDelegate {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cityCellIdentifier, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cityCellIdentifier, for: indexPath)
         // Configure the cell...
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             if currentCity == nil {
-                let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
                 cell.accessoryView = indicator
-                cell.accessoryView?.hidden = false
+                cell.accessoryView?.isHidden = false
                 indicator.startAnimating()
             }else{
-                cell.accessoryView?.hidden = true
+                cell.accessoryView?.isHidden = true
                 cell.textLabel?.text = currentCity
             }
 
         }else{
-            cell.textLabel?.text = cities[indexPath.row]
+            cell.textLabel?.text = cities[(indexPath as NSIndexPath).row]
             cell.detailTextLabel?.text = "hehe"
         }
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
             return "热门城市"
         }else{
@@ -81,16 +81,16 @@ class CityViewController: UITableViewController, LocationToolDelegate {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 1 {
-            delegate?.cityViewController!(self, didSelectCity: cities[indexPath.row])
-            navigationController?.popViewControllerAnimated(true)
+        if (indexPath as NSIndexPath).section == 1 {
+            delegate?.cityViewController!(self, didSelectCity: cities[(indexPath as NSIndexPath).row])
+            _ = navigationController?.popViewController(animated: true)
         }else{
-            if tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.text != nil {
+            if tableView.cellForRow(at: indexPath)?.textLabel?.text != nil {
                 delegate?.cityViewController!(self, didSelectCity: currentCity!)
-                navigationController?.popViewControllerAnimated(true)
+                 _ = navigationController?.popViewController(animated: true)
             }
         }
     }
